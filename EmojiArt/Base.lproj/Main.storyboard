@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="dFj-tZ-km1">
+    <device id="ipad10_5" orientation="landscape">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Split View Controller-->
+        <scene sceneID="MhS-Jq-IEt">
+            <objects>
+                <splitViewController id="dFj-tZ-km1" sceneMemberID="viewController">
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="showDetail" identifier="GoToEmojiView" id="Mfd-kC-qUk"/>
+                        <segue destination="W2r-WL-8Ub" kind="relationship" relationship="masterViewController" id="EgA-tI-yRm"/>
+                    </connections>
+                </splitViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Nbp-QQ-EdN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-933" y="-433"/>
+        </scene>
+        <!--Emoji Art Document Table View Controller-->
+        <scene sceneID="xHg-qH-0Sr">
+            <objects>
+                <tableViewController id="Xvj-Ao-H3Y" customClass="EmojiArtDocumentTableViewController" customModule="EmojiArt" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="HS5-M2-UHp">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="834"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="DocumentCell" textLabel="nXy-qk-TOT" style="IBUITableViewCellStyleDefault" id="2CP-fC-E4W">
+                                <rect key="frame" x="0.0" y="28" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2CP-fC-E4W" id="3gI-Bq-8cC">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nXy-qk-TOT">
+                                            <rect key="frame" x="16" y="0.0" width="288" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Xvj-Ao-H3Y" id="OPF-Wu-c83"/>
+                            <outlet property="delegate" destination="Xvj-Ao-H3Y" id="rOE-c9-X3n"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="Dfd-e8-1CY">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="wZG-5C-QBx">
+                            <connections>
+                                <action selector="AddNewItem:" destination="Xvj-Ao-H3Y" id="aHf-es-6Nm"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Lvh-h3-bta" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="806.65467625899282" y="-892.08633093525191"/>
+        </scene>
+        <!--Emoji Art View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="EmojiArtViewController" customModule="EmojiArt" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="1112" height="834"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kg7-pX-WMd">
+                                <rect key="frame" x="0.0" y="20" width="1112" height="814"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BzX-Cp-bs5" customClass="EmojiArtView" customModule="EmojiArt" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="1112" height="814"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="BzX-Cp-bs5" firstAttribute="top" secondItem="Kg7-pX-WMd" secondAttribute="top" id="7Ks-4R-KxU"/>
+                                    <constraint firstAttribute="trailing" secondItem="BzX-Cp-bs5" secondAttribute="trailing" id="fZR-lX-65d"/>
+                                    <constraint firstItem="BzX-Cp-bs5" firstAttribute="leading" secondItem="Kg7-pX-WMd" secondAttribute="leading" id="hTY-ry-SDt"/>
+                                    <constraint firstAttribute="bottom" secondItem="BzX-Cp-bs5" secondAttribute="bottom" id="jV6-9u-DW6"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Kg7-pX-WMd" secondAttribute="bottom" id="C1o-DL-mMp"/>
+                            <constraint firstItem="Kg7-pX-WMd" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Wo5-0F-qQF"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Kg7-pX-WMd" secondAttribute="trailing" id="nWN-SZ-29o"/>
+                            <constraint firstItem="Kg7-pX-WMd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ouU-zl-sly"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <connections>
+                        <outlet property="dropZone" destination="Kg7-pX-WMd" id="anP-6A-cFf"/>
+                        <outlet property="emojiArtView" destination="BzX-Cp-bs5" id="rXW-mw-3JY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="92" y="109"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="NDp-zW-sLZ">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="W2r-WL-8Ub" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="in5-fN-7Da">
+                        <rect key="frame" x="0.0" y="20" width="320" height="50"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Xvj-Ao-H3Y" kind="relationship" relationship="rootViewController" id="6tj-fG-2g0"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PQG-Wd-gzu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="91.726618705035975" y="-892.08633093525191"/>
+        </scene>
+    </scenes>
+</document>
