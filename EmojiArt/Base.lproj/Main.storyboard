@@ -14,8 +14,8 @@
             <objects>
                 <splitViewController id="dFj-tZ-km1" sceneMemberID="viewController">
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="showDetail" identifier="GoToEmojiView" id="Mfd-kC-qUk"/>
                         <segue destination="W2r-WL-8Ub" kind="relationship" relationship="masterViewController" id="EgA-tI-yRm"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="detailViewController" id="tkk-az-57f"/>
                     </connections>
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nbp-QQ-EdN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -71,14 +71,14 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="EmojiArtViewController" customModule="EmojiArt" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="1112" height="834"/>
+                        <rect key="frame" x="0.0" y="0.0" width="791.5" height="834"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kg7-pX-WMd">
-                                <rect key="frame" x="0.0" y="20" width="1112" height="814"/>
+                                <rect key="frame" x="0.0" y="20" width="791.5" height="814"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BzX-Cp-bs5" customClass="EmojiArtView" customModule="EmojiArt" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="1112" height="814"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="791.5" height="814"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                 </subviews>
