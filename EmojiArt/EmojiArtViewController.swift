@@ -8,7 +8,11 @@
 
 import UIKit
 
-class EmojiArtViewController: UIViewController, UIDropInteractionDelegate, UIScrollViewDelegate {
+class EmojiArtViewController: UIViewController, UIDropInteractionDelegate,UIScrollViewDelegate,
+    UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
+{
+
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,6 +20,7 @@ class EmojiArtViewController: UIViewController, UIDropInteractionDelegate, UIScr
         // Do any additional setup after loading the view.
     }
     
+
     
     @IBOutlet weak var dropZone: UIView! {
         didSet {
@@ -105,6 +110,35 @@ class EmojiArtViewController: UIViewController, UIDropInteractionDelegate, UIScr
         scrollViewWidth.constant = scrollView.contentSize.width
     }
     
+    @IBOutlet weak var emojiCollectionView: UICollectionView! {
+        didSet{
+            emojiCollectionView.dataSource = self
+            emojiCollectionView.delegate = self
+        }
+    }
+    
+    //map takes the collection of strings and make it into array of strings below
+    var emojis = "🐝🦁🍎🍊⚽️🕷🦆🦗🕸🦋🐌🐞🦂🐒🐷🦊🐛🐅🐠🐍".map { String($0) }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return emojis.count
+    }
+    
+    private var font: UIFont {
+        return UIFontMetrics(forTextStyle: .body).scaledFont(for: UIFont.preferredFont(forTextStyle: .body).withSize(64.0))
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+     
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "EmojiCell", for: indexPath)
+        
+        if let emojiCell = cell as? EmojiCollectionViewCell {
+            let text  = NSAttributedString(string: emojis[indexPath.item], attributes: [.font:font])
+            emojiCell.label.attributedText = text
+        }
+        
+        return cell
+    }
     
     /*
     // MARK: - Navigation
