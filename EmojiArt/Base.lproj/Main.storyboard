@@ -115,8 +115,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="79" height="64.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="🐜" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nCp-46-OPm">
-                                                    <rect key="frame" x="5" y="-13" width="74" height="84"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="🐜" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nCp-46-OPm">
+                                                    <rect key="frame" x="5" y="-6" width="69" height="76.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="64"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -124,11 +124,39 @@
                                             </subviews>
                                         </view>
                                         <constraints>
-                                            <constraint firstItem="nCp-46-OPm" firstAttribute="centerX" secondItem="Iff-CE-zGk" secondAttribute="centerX" id="PxI-Od-nWF"/>
-                                            <constraint firstItem="nCp-46-OPm" firstAttribute="centerY" secondItem="Iff-CE-zGk" secondAttribute="centerY" id="abZ-nv-90B"/>
+                                            <constraint firstItem="nCp-46-OPm" firstAttribute="centerX" secondItem="Iff-CE-zGk" secondAttribute="centerX" id="RkM-I7-iGY"/>
+                                            <constraint firstItem="nCp-46-OPm" firstAttribute="centerY" secondItem="Iff-CE-zGk" secondAttribute="centerY" id="tNk-3Y-7d3"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="label" destination="nCp-46-OPm" id="waW-t9-4qS"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DropPlaceHolderCell" id="z2E-VX-EW3">
+                                        <rect key="frame" x="89" y="8" width="79" height="64.5"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="79" height="64.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dak-jy-wHh">
+                                                    <rect key="frame" x="39.5" y="32.5" width="0.0" height="0.0"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="64"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="G4V-CP-wes">
+                                                    <rect key="frame" x="29.5" y="22.5" width="20" height="20"/>
+                                                </activityIndicatorView>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="G4V-CP-wes" firstAttribute="centerY" secondItem="z2E-VX-EW3" secondAttribute="centerY" id="Fr2-LL-RHm"/>
+                                            <constraint firstItem="dak-jy-wHh" firstAttribute="centerX" secondItem="z2E-VX-EW3" secondAttribute="centerX" id="hwS-Rw-nLQ"/>
+                                            <constraint firstItem="dak-jy-wHh" firstAttribute="centerY" secondItem="z2E-VX-EW3" secondAttribute="centerY" id="k8Z-gn-eK6"/>
+                                            <constraint firstItem="G4V-CP-wes" firstAttribute="centerX" secondItem="z2E-VX-EW3" secondAttribute="centerX" id="rBo-8b-2uL"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="label" destination="dak-jy-wHh" id="bye-K5-KR2"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

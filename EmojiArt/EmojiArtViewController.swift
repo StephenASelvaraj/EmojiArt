@@ -9,18 +9,10 @@
 import UIKit
 
 class EmojiArtViewController: UIViewController, UIDropInteractionDelegate,UIScrollViewDelegate,
-    UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
+    UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,
+    UICollectionViewDragDelegate, UICollectionViewDropDelegate
 {
-
-    
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-    
-
+   
     
     @IBOutlet weak var dropZone: UIView! {
         didSet {
@@ -112,8 +104,15 @@ class EmojiArtViewController: UIViewController, UIDropInteractionDelegate,UIScro
     
     @IBOutlet weak var emojiCollectionView: UICollectionView! {
         didSet{
+            //set the datasource and delegate to self as soon as you have the collection view
             emojiCollectionView.dataSource = self
             emojiCollectionView.delegate = self
+            
+            //for the cells to be draggable, make yourself self to implement drag methods
+            emojiCollectionView.dragDelegate = self
+            
+            // For dropping cells
+            emojiCollectionView.dropDelegate = self
         }
     }
     
@@ -140,14 +139,74 @@ class EmojiArtViewController: UIViewController, UIDropInteractionDelegate,UIScro
         return cell
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        session.localContext = collectionView // setting up session context to know whether the drag is within the collectionview
+        return dragItems(at: indexPath)
     }
-    */
+    
+    func collectionView(_ collectionView: UICollectionView, itemsForAddingTo session: UIDragSession, at indexPath: IndexPath, point: CGPoint) -> [UIDragItem] {
+        return dragItems(at: indexPath)
+    }
+    
+    private func dragItems(at indexpath: IndexPath) -> [UIDragItem] {
+        if let attributedString = (emojiCollectionView.cellForItem(at: indexpath) as? EmojiCollectionViewCell)?.label.attributedText {
+            // item provider here is a local object, unlike the url we called in earlier drag, no need of async queue
+            let dragItem = UIDragItem(itemProvider: NSItemProvider(object: attributedString))
+            dragItem.localObject = attributedString
+            return[dragItem]
+        } else {
+            //if we couldnt get item attributed string from the cell, return empty dragitem
+            return []
+        }
+    }
+    
 
+    
+    func collectionView(_ collectionView: UICollectionView, canHandle session: UIDropSession) -> Bool {
+        return session.canLoadObjects(ofClass: NSAttributedString.self)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
+        
+        let isSelf = (session.localDragSession?.localContext as? UICollectionView) == collectionView
+        
+        return UICollectionViewDropProposal.init(operation: isSelf ? .move : .copy, intent: .insertAtDestinationIndexPath)
+            
+       
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
+        //this is where we are dropping. set it to default indexpath if the destination is not chosen by user correctly
+        let destionationIndexPath = coordinator.destinationIndexPath ?? IndexPath(item: 0, section: 0)
+        
+        for item in coordinator.items {
+            // within collection view
+            if let sourceIndexPath = item.sourceIndexPath  { //local drag
+                if let attributedString = item.dragItem.localObject as? NSAttributedString {
+                    collectionView.performBatchUpdates( { // batch update is used for updating model and collectionview together as a batch so that they are not out of sync.
+                        emojis.remove(at: sourceIndexPath.item)
+                        emojis.insert(attributedString.string, at: destionationIndexPath.item)
+                        // do not reload data when we are in the middle of the drag. instead update the collection view
+                        collectionView.deleteItems(at: [sourceIndexPath])
+                        collectionView.insertItems(at: [destionationIndexPath])
+                    })
+                    coordinator.drop(item.dragItem, toItemAt: destionationIndexPath) // this does actual drop, + sign goes away
+                }
+   
+            } else { // this is not a local drag. It comes from outside your collection vewi
+                let placeholderContext = coordinator.drop(item.dragItem, to: UICollectionViewDropPlaceholder(insertionIndexPath: destionationIndexPath, reuseIdentifier: "DropPlaceHolderCell"))
+                item.dragItem.itemProvider.loadObject(ofClass: NSAttributedString.self) { (provider, error) in
+                    DispatchQueue.main.async {
+                        if let attributedString = provider as? NSAttributedString {
+                        placeholderContext.commitInsertion(dataSourceUpdates: { (insertionIndexpath) in
+                            self.emojis.insert(attributedString.string, at: insertionIndexpath.item)
+                            })
+                        } else { // if there is error in getting string, delete the placeholder
+                            placeholderContext.deletePlaceholder()
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
