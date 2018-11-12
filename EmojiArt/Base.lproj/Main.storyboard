@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="dFj-tZ-km1">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="dFj-tZ-km1">
     <device id="ipad10_5" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -77,7 +77,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kg7-pX-WMd">
                                 <rect key="frame" x="0.0" y="108.5" width="791.5" height="725.5"/>
                                 <subviews>
-                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rwU-5r-KYZ">
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rwU-5r-KYZ">
                                         <rect key="frame" x="0.0" y="0.0" width="791.5" height="725.5"/>
                                         <constraints>
                                             <constraint firstAttribute="height" priority="250" constant="814" id="EZo-ZP-xTr"/>
@@ -90,8 +90,10 @@
                                     <constraint firstItem="rwU-5r-KYZ" firstAttribute="centerY" secondItem="Kg7-pX-WMd" secondAttribute="centerY" id="0nW-tJ-0rE"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="rwU-5r-KYZ" secondAttribute="trailing" id="26i-8O-vMG"/>
                                     <constraint firstItem="rwU-5r-KYZ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Kg7-pX-WMd" secondAttribute="leading" id="5tm-nv-Hdf"/>
+                                    <constraint firstItem="rwU-5r-KYZ" firstAttribute="centerX" secondItem="Kg7-pX-WMd" secondAttribute="centerX" id="OOH-rM-ueg"/>
                                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="rwU-5r-KYZ" secondAttribute="bottom" id="Vx0-OL-4jG"/>
                                     <constraint firstItem="rwU-5r-KYZ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Kg7-pX-WMd" secondAttribute="top" id="hiK-RF-NE3"/>
+                                    <constraint firstItem="rwU-5r-KYZ" firstAttribute="centerY" secondItem="Kg7-pX-WMd" secondAttribute="centerY" id="onD-MY-ScQ"/>
                                     <constraint firstItem="rwU-5r-KYZ" firstAttribute="centerX" secondItem="Kg7-pX-WMd" secondAttribute="centerX" id="xO1-I1-ZSY"/>
                                 </constraints>
                             </view>
@@ -157,6 +159,49 @@
                                         </constraints>
                                         <connections>
                                             <outlet property="label" destination="dak-jy-wHh" id="bye-K5-KR2"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AddEmojiCell" id="eO5-KL-5hf">
+                                        <rect key="frame" x="178" y="8" width="79" height="64.5"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="79" height="64.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c5k-Oi-9SQ">
+                                                    <rect key="frame" x="24.5" y="2.5" width="30" height="60"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                                    <state key="normal" title="+"/>
+                                                    <connections>
+                                                        <action selector="addEmoji" destination="BYZ-38-t0r" eventType="touchUpInside" id="qTS-xb-Rde"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="c5k-Oi-9SQ" firstAttribute="centerY" secondItem="eO5-KL-5hf" secondAttribute="centerY" id="Lq0-B4-7Sl"/>
+                                            <constraint firstItem="c5k-Oi-9SQ" firstAttribute="centerX" secondItem="eO5-KL-5hf" secondAttribute="centerX" id="mhs-hE-Nls"/>
+                                        </constraints>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="EmojiInputCell" id="SvB-bx-pVb" customClass="TextFieldCollectionViewCell" customModule="EmojiArt" customModuleProvider="target">
+                                        <rect key="frame" x="267" y="9.5" width="79" height="62"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="79" height="62"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="fill" borderStyle="line" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="d50-YD-TL7">
+                                                    <rect key="frame" x="0.0" y="16" width="80" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                                                </textField>
+                                            </subviews>
+                                        </view>
+                                        <size key="customSize" width="79" height="62"/>
+                                        <connections>
+                                            <outlet property="textField" destination="d50-YD-TL7" id="XF4-8R-b8H"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

@@ -8,10 +8,21 @@
 
 import UIKit
 
+// Revisit below two methods and understand
+
+protocol EmojiArtViewDelegate: class {
+    func emojiArtViewDidChange(_ sender: EmojiArtView)
+}
+
+extension Notification.Name {
+    static let EmojiArtViewDidChange = Notification.Name("EmojiArtViewDidChange")
+}
+
 class EmojiArtView: UIView, UIDropInteractionDelegate
 {
 
-   
+    weak var delegate: EmojiArtViewDelegate?
+    
     var backGroundImage: UIImage? {
         didSet {
             setNeedsDisplay()
@@ -62,8 +73,12 @@ class EmojiArtView: UIView, UIDropInteractionDelegate
         label.attributedText = attributedString
         label.sizeToFit()
         label.center = point
+        addEmojiArtGestureRecognizers(to: label) // for recognizing different gestures like pinching, paning etc
         addSubview(label)
     }
     
+  
     
 }
+
+

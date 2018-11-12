@@ -13,7 +13,15 @@ class EmojiArtViewController: UIViewController, UIDropInteractionDelegate,UIScro
     UICollectionViewDragDelegate, UICollectionViewDropDelegate
 {
    
+    private var addingEmoji = false
     
+    @IBAction func addEmoji() {
+        addingEmoji = true
+        emojiCollectionView.reloadSections(IndexSet(integer: 0))
+        
+    }
+    
+  
     @IBOutlet weak var dropZone: UIView! {
         didSet {
             dropZone.addInteraction(UIDropInteraction(delegate: self))
@@ -120,23 +128,67 @@ class EmojiArtViewController: UIViewController, UIDropInteractionDelegate,UIScro
     var emojis = "🐝🦁🍎🍊⚽️🕷🦆🦗🕸🦋🐌🐞🦂🐒🐷🦊🐛🐅🐠🐍".map { String($0) }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return emojis.count
+        switch section {
+        case 0:  return 1
+        case 1:  return emojis.count
+        default: return 0
+        }
     }
+    
     
     private var font: UIFont {
         return UIFontMetrics(forTextStyle: .body).scaledFont(for: UIFont.preferredFont(forTextStyle: .body).withSize(64.0))
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-     
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "EmojiCell", for: indexPath)
-        
-        if let emojiCell = cell as? EmojiCollectionViewCell {
-            let text  = NSAttributedString(string: emojis[indexPath.item], attributes: [.font:font])
-            emojiCell.label.attributedText = text
+        print(indexPath.section)
+        if indexPath.section == 1 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "EmojiCell", for: indexPath)
+            
+            if let emojiCell = cell as? EmojiCollectionViewCell {
+                let text  = NSAttributedString(string: emojis[indexPath.item], attributes: [.font:font])
+                emojiCell.label.attributedText = text
+                
+            }
+            return cell
+            
+        } else if addingEmoji {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "EmojiInputCell", for:  indexPath)
+            // MARK: Add text
+            if let inputCell = cell as? TextFieldCollectionViewCell {
+                inputCell.resignationHandler = { [weak self, unowned inputCell] in
+                    if let text = inputCell.textField.text {  // break memory cycle by weak
+                        // memory cycle
+                        self?.emojis = (text.map{ String ($0) } + self!.emojis).uniquified
+                        
+                        
+                    }
+                    self?.addingEmoji = false
+                    self?.emojiCollectionView.reloadData()
+                }
+            }
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AddEmojiCell", for: indexPath)
+            return cell
         }
+   
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        //wide button while adding text
+        if addingEmoji && indexPath.section == 0 {
+            return CGSize(width: 300, height: 80)
+        } else {
+            return CGSize(width: 80, height: 80)
         
-        return cell
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if let inputCell = cell as? TextFieldCollectionViewCell { // if it is input text field is chosen, make the keyboard to come up
+            inputCell.textField.becomeFirstResponder()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
@@ -148,8 +200,15 @@ class EmojiArtViewController: UIViewController, UIDropInteractionDelegate,UIScro
         return dragItems(at: indexPath)
     }
     
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 2
+    }
+    
+
+    
     private func dragItems(at indexpath: IndexPath) -> [UIDragItem] {
-        if let attributedString = (emojiCollectionView.cellForItem(at: indexpath) as? EmojiCollectionViewCell)?.label.attributedText {
+        //disable dragging while adding new items
+        if !addingEmoji, let attributedString = (emojiCollectionView.cellForItem(at: indexpath) as? EmojiCollectionViewCell)?.label.attributedText {
             // item provider here is a local object, unlike the url we called in earlier drag, no need of async queue
             let dragItem = UIDragItem(itemProvider: NSItemProvider(object: attributedString))
             dragItem.localObject = attributedString
@@ -168,9 +227,14 @@ class EmojiArtViewController: UIViewController, UIDropInteractionDelegate,UIScro
     
     func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
         
-        let isSelf = (session.localDragSession?.localContext as? UICollectionView) == collectionView
+        if let indexPath = destinationIndexPath, indexPath.section == 1  {
+            let isSelf = (session.localDragSession?.localContext as? UICollectionView) == collectionView
+            
+            return UICollectionViewDropProposal.init(operation: isSelf ? .move : .copy, intent: .insertAtDestinationIndexPath)
+        } else { // disallowing items to put it into section 0 ( + sign)
+            return UICollectionViewDropProposal(operation: .cancel)
+        }
         
-        return UICollectionViewDropProposal.init(operation: isSelf ? .move : .copy, intent: .insertAtDestinationIndexPath)
             
        
     }
